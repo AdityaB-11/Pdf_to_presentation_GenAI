@@ -59,15 +59,4 @@ You can customize the number of content slides by modifying the `num_content_sli
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Google Gemini AI for powering the content generation
-<<<<<<< HEAD
-- OpenAI for inspiration and guidance
-=======
-- OpenAI for inspiration and guidance
->>>>>>> c8013370e2d8cb28173c125da97c8fd24359e994
+ 
