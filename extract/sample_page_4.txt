@@ -1,0 +1,24 @@
+!
+!
+!
+Fig 4: RS232c DB 25 pinout
+Signal Descriptions
+– TxD – This pin carries data from the computer to the serial device
+– RXD – This pin carries data from the serial device to the computer
+– DTR signals – DTR is used by the computer to signal that it is readyto communicate with the
+serial device like modem. In other words, DTRindicates the modem that the DTE (computer) is ON.
+– DSR – Similarly to DTR, Data set ready (DSR) is an indication from themodem that it is ON.
+– DCD – Data carrier detect (DCD) indicates that carrier for the transmitdata is ON.
+– RTS – This pin is used to request clearance to send data to a modem.
+– CTS – This pin is used by the serial device to acknowledge the computersRTS signal. In most
+situations, RTS and CTS are constantly onthroughout the communication session.
+– Clock signals (TC, RC, and XTC) – The clock signals are only used forsynchronous
+communications. The modem or DSU extracts the clock fromthe data stream and provides a steady
+clock signal to the DTE. Thetransmit and receive clock signals need not have to be the same, or
+evenat the same baud rate.
+– CD – CD stands for Carrier detect. Carrier detect is used by a modemto signal that it has a made
+a connection with another modem, or hasdetected a carrier tone. In other words, this is used by the
+modem tosignal that a carrier signal has been received from a remote modem.
+RI – RI stands for ring indicator. A modem toggles (keystroke) the stateof this line when an
+incoming call rings in the phone. In other words,this is used by an autoanswer modem to signal the
+

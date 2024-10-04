@@ -1,0 +1,37 @@
+between any two devices. RS-232/485 cabling,however, can extend 1,200m or greater. Typically,
+RS-232/485 is used totransmit American Standard Code for Information Interchange (ASCII)
+data.Although National Instruments serial hardware can transmit 7-bit as wellas 8-bit data, most
+applications use only 7-bit data. Seven-bit ASCII canrepresent the English alphabet, decimal
+numbers, and common punctuationmarks. It is a standard protocol that virtually all hardware and
+software understand.Serial communication is mainly using the three transmission lines:
+(1) ground, (2) transmit, and (3) receive. Because RS-232/485 communicationis asynchronous, the
+serial port can transmit data on one line while receivingdata on another. Other lines such as the
+handshaking lines are not required.The important serial characteristics are baud rate, data bits, stop
+bits, andparity. To communicate between a serial instrument and a serial port on computer,these
+parameters must match.The RS-232 port, or ANSI/EIA-232 port, is the serial connection foundon
+IBM-compatible PCs. It is used for many purposes, such as connecting amouse, printer, or modem,
+as well as industrial instrumentation. The RS-232protocol can have only one device connected to
+each port. The RS-485 (EIA-485 Standard) protocol can have 32 devices connected to each port.
+Withthis enhanced multidrop capability the user can create networks of devicesconnected to a single
+RS-485 serial port. Noise immunity and multi dropcapability make RS-485, the choice in industrial
+applications requiring manydistributed devices networked to a PC or other controller for data
+collection.USB was designed primarily to connect peripheral devices to PCs, includingkeyboards,
+scanners, and disk drives.RS-232 (Recommended standard-232) is a standard interface approved
+bythe Electronic Industries Association (EIA) for connecting serial devices. Inother words, RS-232
+is a long established standard that describes the physicalinterface and protocol for relatively low-
+speed serial data
+!
+!
+Fig 3: Pin diagram
+!
+!
+!
+!
+!
+!
+!
+!
+!
+Table: pin description
+!
+

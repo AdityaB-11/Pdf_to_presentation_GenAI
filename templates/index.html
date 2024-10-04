@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to PowerPoint Converter - Teach-Assist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .navbar {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .file-input {
+            display: none;
+        }
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .file-label:hover {
+            background-color: #2980b9;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #27ae60;
+        }
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        #file-name {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .loading::after {
+            content: "⏳";
+            animation: loading 1s infinite;
+        }
+        @keyframes loading {
+            0% { content: "⏳"; }
+            33% { content: "⌛"; }
+            66% { content: "⏳"; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Teach-Assist</div>
+    </nav>
+    <div class="container">
+        <h1>PDF to PowerPoint Converter</h1>
+        {% if message %}
+        <div class="message {% if 'Error' in message %}error{% else %}success{% endif %}">
+            {{ message }}
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+            <input type="file" name="file" accept=".pdf" id="file-input" class="file-input">
+            <label for="file-input" class="file-label">Choose PDF File</label>
+            <div id="file-name"></div>
+            <br>
+            <input type="submit" value="Convert" class="submit-btn" id="submit-btn" disabled>
+        </form>
+        <div class="loading" id="loading">Converting... This may take a few moments.</div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const submitBtn = document.getElementById('submit-btn');
+        const uploadForm = document.getElementById('upload-form');
+        const loading = document.getElementById('loading');
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileName.textContent = `Selected file: ${e.target.files[0].name}`;
+                submitBtn.disabled = false;
+            } else {
+                fileName.textContent = '';
+                submitBtn.disabled = true;
+            }
+        });
+
+        uploadForm.addEventListener('submit', (e) => {
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

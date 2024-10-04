@@ -1,0 +1,47 @@
+!
+SBMX1027 - VIRTUAL BIOINSTRUMENTATION
+!
+UNIT IV
+INSTRUMENT INTERFACES
+!
+4–20mA Current Loop
+!
+Current-mode data transmission is the preferred technique in many environments, particularly in
+industrial applications. Most systems employ the familiar 2-wire, 4–20mA current loop, in which a
+single twisted-pair cable supplies power to the module and carries the output signal as well.
+The 3-wire interface is less common but allows the delivery of more power to the module
+electronics. A 2-wire system provides only 4mA at the line voltage (the remaining 16mA carries the
+signal). Current loops offer several advantages over voltage-mode output transducers:
+– They do not require a precise or stable supply voltage.
+– Their insensitivity to IR drops makes them suitable for long distances.
+– A 2-wire twisted-pair cable offers very good noise immunity.
+– The 4mA of current required for information transfer serves two purposes:
+it can furnish power to a remote module, and it provides a distinctionbetween zero (4 mA) and no
+information (no current flow).In a 2-wire, 4–20mA current loop, supply current for the sensor
+electronicsmust not exceed the maximum available, which is 4mA (the remaining 16mAcarries the
+signal). Because a 3-wire current loop is easily derived from the2-wire version, the following
+discussion focuses on the 2-wire version.
+!
+Need for a Current Loop
+The 4–20mA current loop shown in Fig. 1 is a common method of transmittingsensor information
+in many industrial process-monitoring applications. A sensor is a device used to measure physical
+parameters such as temperature, pressure, speed, liquid flow rates, etc. Transmitting sensory
+information through a current loop is particularly useful when theinformationhas to be sent to a
+remote location over long distances (1,000 ft, ormore). The loop’s operation is straightforward: a
+sensor’s output voltage is first converted to a proportional current, with 4mA normally representing
+the sensor’s zero-level output, and 20mA representing the sensor’s full-scale output. Then, a
+receiver at the remote end converts the 4–20mA current back into a voltage which in turn can be
+further processed by a computer or display module. However, transmitting a sensor’s output as a
+voltage over long
+distances has several drawbacks. Unless very high input-impedance devices are used, transmitting
+voltages over long distances produces correspondingly lower voltages at the receiving end due
+wiring and interconnect resistances.However, high-impedance instruments can be sensitive to noise
+pickup since the lengthy signal-carrying wires often run in close proximity to other electrically
+noisy system wiring. Shielded wires can be used to minimize noise pickup, but their high cost may
+be prohibitive when long distances areinvolved. Sending a current over long distances produces
+voltage losses proportionalto the wiring’s length. However, these voltage losses also known as loop
+drops” do not reduce the 4–20mA current as long as the transmitter anloop supply can compensate
+for these drops. The magnitude of the current inthe loop is not affected by voltage drops in the
+system wiring since all of thecurrent (i.e., electrons) originating at the negative (−) terminal of the
+loop power supply has to return back to its positive (+) terminal
+
