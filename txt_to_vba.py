@@ -1,12 +1,23 @@
 import os
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import configparser
 
+# Read the config file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-if not GOOGLE_API_KEY:
+# Get the API key from the config file
+api_key = config['DEFAULT']['GOOGLE_API_KEY']
+
+# Set the environment variable
+os.environ['GOOGLE_API_KEY'] = api_key
+
+if not os.environ.get("GOOGLE_API_KEY"):
     raise ValueError("GOOGLE_API_KEY environment variable is not set")
-genai.configure(api_key=GOOGLE_API_KEY)
+
+# Use the api_key variable directly here
+genai.configure(api_key=api_key)
 
 def read_input_files(folder_path):
     combined_content = ""
@@ -21,47 +32,47 @@ def generate_outline_with_gemini(content, num_content_slides):
     model = genai.GenerativeModel('gemini-pro')
     
     prompt = f"""
-    Create a PowerPoint presentation outline based on the following content:
+    Create a detailed PowerPoint presentation outline based on the following content:
 
     {content}
 
     Generate an outline with the following structure:
     1. Title Slide
-    2-{num_content_slides+1}. Content Slides (varying number of main points and details per slide)
-    {num_content_slides+2}. Conclusion Slide
+    2. Index Slide (will be generated automatically, don't include in your output)
+    3-{num_content_slides+2}. Content Slides (5-7 key points per slide)
+    {num_content_slides+3}. Conclusion Slide
 
-    For each slide, provide:
+    For each slide (except the index slide), provide:
     - Slide Title
-    - Multiple Main Points (2-5 bullet points)
-    - Varying number of details or sub-points for each main point
+    - 5-7 Key Points (detailed sentences or ideas)
 
     Format the output as follows:
     [Slide 1]
-    Title: [Slide Title]
-    - [Main Point 1]
-      • [Detail 1]
-      • [Detail 2]
-    - [Main Point 2]
-      • [Detail 1]
-    - [Main Point 3]
-      • [Detail 1]
-      • [Detail 2]
-      • [Detail 3]
+    Title: [Presentation Title]
 
     [Slide 2]
-    Title: [Slide Title]
-    - [Main Point 1]
-    - [Main Point 2]
-      • [Detail 1]
-    - [Main Point 3]
-      • [Detail 1]
-      • [Detail 2]
-    - [Main Point 4]
+    Title: Index
+    - 1: [First Content Slide Title]
+    - 2: [Second Content Slide Title]
+    - 3: [Third Content Slide Title]
+    - ...
+    - N: [Last Content Slide Title]
+    - Conclusion
 
-    ... (continue for all slides)
+    [Slide 3]
+    Title: [First Content Slide Title]
+    - [Key Point 1 - Detailed sentence]
+    - [Key Point 2 - Detailed sentence]
+    - [Key Point 3 - Detailed sentence]
+    - [Key Point 4 - Detailed sentence]
+    - [Key Point 5 - Detailed sentence]
+    - [Key Point 6 - Detailed sentence] (optional)
+    - [Key Point 7 - Detailed sentence] (optional)
 
-    Ensure each content slide has a varying number of main points (2-5) with a different number of details for each point.
-    Keep the content concise and suitable for a presentation.
+    ... (continue for all content slides and conclusion)
+
+    Ensure each content slide has 5-7 detailed key points.
+    Provide comprehensive information while keeping it suitable for a presentation.
     """
 
     generation_config = {
@@ -101,7 +112,6 @@ def generate_outline_with_gemini(content, num_content_slides):
 def parse_gemini_output(output):
     slides = []
     current_slide = None
-    current_point = None
 
     for line in output.split('\n'):
         line = line.strip()
@@ -112,11 +122,7 @@ def parse_gemini_output(output):
         elif line.startswith('Title:'):
             current_slide['title'] = line.split(':', 1)[1].strip()
         elif line.startswith('-'):
-            current_point = line
-            current_slide['content'].append(current_point)
-        elif line.startswith('•'):
-            if current_point:
-                current_slide['content'].append(f"  {line}")
+            current_slide['content'].append(line)
 
     if current_slide:
         slides.append(current_slide)
@@ -124,7 +130,12 @@ def parse_gemini_output(output):
     return slides
 
 def generate_vba_code(slides):
-    vba_code = """
+    # Print debugging information
+    print("Debugging: Number of slides:", len(slides))
+    for i, slide in enumerate(slides):
+        print(f"Slide {i}: {slide['title']}")
+
+    vba_code = f"""
 Sub CreatePresentation()
     Dim ppt As Presentation
     Dim sld As Slide
@@ -134,34 +145,61 @@ Sub CreatePresentation()
     
     ' Create a new presentation
     Set ppt = Application.Presentations.Add
-    """
 
-    for index, slide in enumerate(slides, start=1):
+    ' Add title slide
+    Set sld = ppt.Slides.Add(1, ppLayoutTitle)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "{slides[0]['title']}"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+
+    ' Add index slide
+    Set sld = ppt.Slides.Add(2, ppLayoutText)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Index"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
+    Set tf = shp.TextFrame
+    tf.WordWrap = True
+
+    ' Add index content
+"""
+
+    # Add index content
+    for i, slide in enumerate(slides[2:], start=1):  # Skip title and index slides
+        vba_code += f"""
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "{i}: {slide['title'].replace('"', '""')}"
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+"""
+
+    # Add Conclusion
+    vba_code += """
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Conclusion"
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+"""
+
+    # Add content slides
+    for index, slide in enumerate(slides[2:], start=3):  # Start from slide 3
         vba_code += f"""
     ' Add slide {index}
     Set sld = ppt.Slides.Add({index}, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "{slide['title']}"
-    Set shp = sld.Shapes(2)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "{slide['title'].replace('"', '""')}"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
-    tf.DeleteText
-    """
+    tf.WordWrap = True
+    tf.AutoSize = ppAutoSizeShapeToFitText
+"""
 
         for point in slide['content']:
-            if point.startswith('-'):
-                vba_code += f"""
+            vba_code += f"""
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "{point[1:].strip()}"
+    para.Text = "{point[1:].strip().replace('"', '""')}"
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
-    """
-            elif point.startswith('  •'):
-                vba_code += f"""
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "{point[3:].strip()}"
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 0.8
-    para.IndentLevel = 2
-    """
+    para.Font.Size = 14
+"""
 
     vba_code += """
 End Sub

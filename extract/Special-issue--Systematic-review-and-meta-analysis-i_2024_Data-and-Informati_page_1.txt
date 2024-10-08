@@ -1,0 +1,59 @@
+8(2024)100069
+Contents lists available at ScienceDirect
+Data and Information Management
+journal homepage: www.journals.elsevier.com/data-and-information-management
+Special issue: Systematic review and meta-analysis in information management research
+We are pleased to publish this second, and final, volume of our cyber security. The paper is an important read for scholars and practi-
+special issue on systematic literature review and meta-analytic methods tioners of cyber security.
+in the field of data and information management. We include five papers The fourth paper is by Gupta, Ding, Guan and Ding from Singapore
+from authors representing diverse geographic regions, namely China, University of Social Science and Nanyang Technological University,
+South Korea, South Africa, Singapore, and Iran. The papers selected for Singapore. Their paper illustrates the usefulness of systematic search
+inclusion in the second volume apply meta-analysis, topic modelling, and topic modelling to provide an overview of the scholarly literature on
+and systematic review techniques. They illustrate the benefits of these an emerging technology, namely generative AI’s (GAI). They applied the
+methods to objectively summarise large bodies of literature, resolve BERTopic topic modelling algorithm to 1319 records in Scopus and
+inconsistencies in past research, identify gaps in literature and generate derived 23 topics from which they deduced seven clusters of topics.
+ideas for future research. These topics address innovative GAI applications, GAI infrastructure and
+All papers in the special issue were subjected to double-blind peer techniques, and GAI governance. Opportunities for future research in
+review by at least two expert reviewers with multiple rounds of review the evolving GAI field are offered. The paper is important for scholars
+and revision, and the guest editors were assigned papers to ensure no interested in learning about the advancement of generative AI and the
+conflicts of interest. current state of literature on the topic.
+The first paper by Qiu and Zhang from Wuhan University, China, The final paper in this special issue is by Talafidaryani and Asarian
+addresses the topic of electronic word-of-mouth (eWOM) in the form of from University of Tehran, Iran. They provide another example of a
+online reviews. They present a meta-analysis of 156 studies addressing smart, automated literature review. Specifically, they use the LDA topic
+the relationship between online reviews and consumer purchase in- modelling text analysis approach to reveal the dominant themes in
+tentions. They demonstrate the use of meta-analytic techniques to research on digital transformation. Texts were sourced from Scopus and
+reconcile inconsistencies in past studies by examining the predominant Web of Science along with JCR journals. The themes identified include a
+antecedents of purchase intention in the online reviews context, and the core knowledge group and a group of developing trends in digital
+role of various moderators. They use the random-effect model to esti- transformation research. They provide useful input to future research by
+mate pairwise correlations along with a meta-regression technique. By uncovering some of the fastest growing topics in digital transformation.
+revealing both review-related and source-related antecedents and the
+moderating roles of culture and product type, they offer important
+Acknowledgements
+practical and research implications.
+The second paper by Batool and Mou from Pusan National Univer-
+We would once again like to thank the editorial board of Data and
+sity, South Korea is a systematic literature review and analysis of virtual Information Management for the opportunity to conduct this special
+try-on technology (TOT). The paper offers a useful overview of TOT
+issue. We are grateful to the authors who contributed to this special issue
+technologies and applications. This is followed by a systematic review of and to the reviewers whose comments helped strengthen the papers for
+80 articles that uncovers the range of theories employed in past TOT
+publication.
+research, along with the antecedent and outcome variables examined.
+Various gaps are uncovered to promote future research.
+Jian Mou
+The third paper by Jada and Mayayise from the University of the
+School of Business, Pusan National University, Busan, South Korea
+Witwatersrand, South Africa, presents results of a systematic literature
+E-mail address: jian.mou@pusan.ac.kr.
+review on the role of artificial intelligence in cyber security. The
+PRISMA method was used to guide their systematic review stages. Their Jason Cohen*
+systematic search of the scholarly literature resulted in a sample of 73 School of Business Sciences, University of the Witwatersrand, Johannesburg,
+articles focused on AI and cyber security in the organisational and en- South Africa
+terprise context. In addition to revealing prevalent themes on how the
+use of AI differs from traditional non-AI means of cyber protection, their *Corresponding author.
+review also uncovers both the positive and negative impacts of AI use in E-mail address: jason.cohen@wits.ac.za (J. Cohen).
+https://doi.org/10.1016/j.dim.2024.100069
+Availableonline13March2024
+2543-9251/©2024TheAuthors.PublishedbyElsevierLtdonbehalfofSchoolofInformationManagementWuhanUniversity.Thisisanopenaccessarticleunder
+theCCBY-NC-NDlicense(http://creativecommons.org/licenses/by-nc-nd/4.0/).
+

@@ -3,6 +3,7 @@ import re
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.enum.shapes import MSO_SHAPE_TYPE
+from pptx.dml.color import RGBColor
 
 def parse_vba_file(vba_file_path):
     slides_data = []
@@ -42,7 +43,9 @@ def parse_vba_file(vba_file_path):
     return slides_data
 
 def create_powerpoint(slides_data, output_file):
-    prs = Presentation()
+    # Create a new presentation with a specific theme
+    theme_path = os.path.join('themes', 'your_theme.pptx')
+    prs = Presentation('themes/Presentation5.pptx')
     
     for slide_data in slides_data:
         slide_layout = prs.slide_layouts[1]  # Using layout with title and content
@@ -50,6 +53,9 @@ def create_powerpoint(slides_data, output_file):
         
         title = slide.shapes.title
         title.text = slide_data['title']
+        
+        # Set the title color to maroon
+        title.text_frame.paragraphs[0].font.color.rgb = RGBColor(128, 0, 0)
         
         content = slide.placeholders[1]
         tf = content.text_frame
