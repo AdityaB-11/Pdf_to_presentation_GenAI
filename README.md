@@ -20,7 +20,7 @@ This project converts PDF content into a PowerPoint presentation outline using G
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/pdf-to-ppt.git
+   git clone https://github.com/AdityaB-11/pdf-to-ppt.git
    cd pdf-to-ppt
    ```
 
