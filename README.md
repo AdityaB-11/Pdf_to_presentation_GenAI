@@ -50,9 +50,6 @@ This project converts PDF content into a PowerPoint presentation outline using G
 ## Configuration
 
 You can customize the number of content slides by modifying the `num_content_slides` variable in the `main()` function of `txt_to_vba.py`.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+ 
 
  
