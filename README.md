@@ -45,7 +45,7 @@ This project converts PDF content into a PowerPoint presentation outline using G
    ```
 2. You'll be then directed to localhost webui at http://127.0.0.1:5000 
 
- .
+   Upload the pdf you want to convert into presentation,it'll be downloaded to your device. 
 
 ## Configuration
 
