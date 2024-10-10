@@ -38,18 +38,14 @@ This project converts PDF content into a PowerPoint presentation outline using G
 
 ## Usage
 
-1. Place your input PDF files in the `extract` folder.
-
-2. Run the script:
+  
+1. Run the script:
    ```
-   python txt_to_vba.py
+   python app.py
    ```
+2. You'll be then directed to localhost webui at http://127.0.0.1:5000 
 
-3. The script will generate a VBA file named `create_presentation.vba`.
-
-4. Open Microsoft PowerPoint and press Alt + F11 to open the VBA editor.
-
-5. Import the generated `create_presentation.vba` file and run the macro to create your presentation.
+ .
 
 ## Configuration
 
