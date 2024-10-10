@@ -1,22 +1,18 @@
 import os
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
-import configparser
+from dotenv import load_dotenv
 
-# Read the config file
-config = configparser.ConfigParser()
-config.read('config.ini')
+# Load the .env file
+load_dotenv()
 
-# Get the API key from the config file
-api_key = config['DEFAULT']['GOOGLE_API_KEY']
+# Get the API key from the .env file
+api_key = os.getenv('GOOGLE_API_KEY')
 
-# Set the environment variable
-os.environ['GOOGLE_API_KEY'] = api_key
+if not api_key:
+    raise ValueError("GOOGLE_API_KEY environment variable is not set in .env file")
 
-if not os.environ.get("GOOGLE_API_KEY"):
-    raise ValueError("GOOGLE_API_KEY environment variable is not set")
-
-# Use the api_key variable directly here
+# Configure the genai library with the API key
 genai.configure(api_key=api_key)
 
 def read_input_files(folder_path):
