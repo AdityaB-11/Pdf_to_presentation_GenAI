@@ -21,7 +21,7 @@ This project converts PDF content into a PowerPoint presentation outline using G
 1. Clone the repository:
    ```
    git clone https://github.com/AdityaB-11/pdf-to-ppt.git
-   cd pdf-to-ppt
+   cd Pdf_to_presentation_GenAI
    ```
 
 2. Install required Python packages:
