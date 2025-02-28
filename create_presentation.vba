@@ -11,8 +11,18 @@ Sub CreatePresentation()
 
     ' Add title slide
     Set sld = ppt.Slides.Add(1, ppLayoutTitle)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymer Chemistry: Types, Properties, and Biomedical Applications"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Huffman Coding: Data Compression Through Efficient Encoding"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    
+    ' Add creator name if provided
+    If sld.Shapes.HasTitle Then
+        Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 400, 600, 50)
+        Set tf = shp.TextFrame
+        tf.TextRange.Text = "Created by: guppi"
+        tf.TextRange.Font.Size = 14
+        tf.TextRange.Font.Color.RGB = RGB(128, 128, 128)  ' Gray color
+        tf.HorizontalAlignment = ppAlignCenter
+    End If
 
     ' Add index slide
     Set sld = ppt.Slides.Add(2, ppLayoutText)
@@ -37,7 +47,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation Polymerization: Step-Growth"
+    para.Text = "Introduction to Huffman Coding"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -55,7 +65,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymer Applications: Examples of Common Polymers"
+    para.Text = "How Huffman Coding Works: An Example"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -73,7 +83,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conducting Polymers: Enhancing Electrical Conductivity"
+    para.Text = "Building the Huffman Tree"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -91,7 +101,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Types of Conducting Polymers and Doping"
+    para.Text = "Huffman Coding Algorithm: A Step-by-Step Guide"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -109,7 +119,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymers in Medicine and Surgery: Biomaterials"
+    para.Text = "Prefix Codes and Ambiguity Prevention"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -127,7 +137,25 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conclusion: The Versatility of Polymers"
+    para.Text = "Encoding and Decoding Example & Code Implementation Overview"
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Size = 14
+    para.ParagraphFormat.LeftIndent = 20
+    para.ParagraphFormat.SpaceAfter = 12
+    para.ParagraphFormat.SpaceBefore = 0
+
+    ' Add number
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "7."
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceAfter = 0
+    para.ParagraphFormat.SpaceBefore = 6
+    
+    ' Add title on next line
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Conclusion: Efficiency and Applications of Huffman Coding"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -148,7 +176,7 @@ Sub CreatePresentation()
 
     ' Add slide 3
     Set sld = ppt.Slides.Add(3, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Condensation Polymerization: Step-Growth"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Introduction to Huffman Coding"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -156,44 +184,50 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation polymerization involves monomers with at least two functional groups that react to form a polymer chain, releasing a small molecule (e.g., water, ammonia, HCl) as a byproduct."
+    para.Text = "Huffman coding is a lossless data compression algorithm that reduces file size by assigning shorter codes to more frequent characters."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Mineral acids or bases often catalyze the reaction, increasing its rate."
+    para.Text = "It was developed by David A. Huffman and published in 1952."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Unlike addition polymerization, it's an endothermic process, requiring energy input."
+    para.Text = "The algorithm is based on the frequency of characters in the input data.  More frequent characters receive shorter codes, and less frequent characters receive longer codes."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "The reaction proceeds relatively slowly compared to addition polymerization, with a stepwise growth of the polymer chain."
+    para.Text = "This variable-length coding scheme leads to significant compression, especially for text with repetitive characters."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation polymers typically exhibit higher molecular weights than addition polymers."
+    para.Text = "Huffman coding is widely used in various applications, including data archiving, file compression (e.g., .zip, .rar), and fax transmission."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Three-dimensional network structures are common, often resulting in thermosetting polymers."
+    para.Text = "It forms the basis for many more advanced compression techniques."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Unlike fixed-length coding (e.g., ASCII), Huffman coding dynamically adjusts code lengths based on character frequency."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 4
     Set sld = ppt.Slides.Add(4, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymer Applications: Examples of Common Polymers"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "How Huffman Coding Works: An Example"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -201,44 +235,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polyethylene: Used in disposable syringes due to its flexibility and low cost."
+    para.Text = "Consider a string: ""ABACCABADDCAB"". Each character typically uses 8 bits (1 byte).  A 15-character string requires 120 bits (15 bytes)."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polypropylene:  Employed in heart walls and blood filters due to its biocompatibility and strength."
+    para.Text = "Huffman coding aims to represent this string using fewer bits."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polyvinyl chloride (PVC): Used in disposable syringes and medical tubing for its durability and chemical resistance."
+    para.Text = "We first count the frequency of each character: A (5), B (2), C (3), D (2)."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Acrylic hydrogels: Utilized in grafting applications due to their water-absorbing properties and biocompatibility."
+    para.Text = "The algorithm then constructs a binary tree based on these frequencies, assigning shorter codes to more frequent characters."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymethyl methacrylate (PMMA):  A common material for contact lenses due to its optical clarity and biocompatibility."
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
-    para.Font.Size = 14
-
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Poly(alkyl sulfone):  Used in membrane oxygenators due to its high gas permeability and biocompatibility."
+    para.Text = "The final encoded string will be significantly shorter than the original 120 bits."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 5
     Set sld = ppt.Slides.Add(5, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Conducting Polymers: Enhancing Electrical Conductivity"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Building the Huffman Tree"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -246,38 +274,44 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Most polymers are electrical insulators due to the lack of freely mobile electrons."
+    para.Text = "The process begins by creating a min-heap data structure, containing nodes representing each character and its frequency."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conductivity can be achieved by introducing a system of conjugated (alternating) double bonds within the polymer backbone."
+    para.Text = "Repeatedly, the two nodes with the lowest frequencies are extracted from the heap."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "These conjugated pi electrons can be excited and transported through the polymer in an electric field, enabling electrical conduction."
+    para.Text = "A new node is created, its frequency being the sum of the frequencies of the extracted nodes.  The extracted nodes become the left and right children of this new node."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "This leads to the formation of valence and conduction bands, similar to those found in metals and semiconductors."
+    para.Text = "This new node is inserted back into the heap."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Examples of intrinsically conducting polymers include polyacetylene, polyaniline, and polythiophene."
+    para.Text = "This process continues until only one node remains – the root of the Huffman tree."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Each leaf node represents a character, and the path from the root to a leaf node defines the code for that character (0 for left, 1 for right)."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 6
     Set sld = ppt.Slides.Add(6, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Types of Conducting Polymers and Doping"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Huffman Coding Algorithm: A Step-by-Step Guide"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -285,38 +319,50 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Intrinsically conducting polymers (ICPs) possess delocalized electrons within their backbone or associated groups."
+    para.Text = "**Step 1:** Calculate the frequency of each unique character in the input string."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Extrinsically conducting polymers gain conductivity through added ingredients: filled polymers (with carbon black or metal oxides) and blended polymers (mixing with conducting polymers)."
+    para.Text = "**Step 2:** Create a min-heap data structure to store characters and their frequencies."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Doping enhances ICP conductivity by introducing charge carriers: p-doping (oxidation) using Lewis acids like iodine or iron chloride, and n-doping (reduction) using Lewis bases like lithium or sodium."
+    para.Text = "**Step 3:**  Repeatedly extract the two nodes with the smallest frequencies from the heap."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "P-doping creates positive charges on the polymer backbone, while n-doping creates negative charges."
+    para.Text = "**Step 4:** Create a new node with these two nodes as children, the frequency of the new node being the sum of the children's frequencies. Insert the new node back into the heap."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Coordination conducting polymers are charge-transfer complexes formed by combining metal atoms with polydentate ligands."
+    para.Text = "**Step 5:** Repeat Step 3 and 4 until only one node remains (the root of the Huffman tree)."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "**Step 6:** Assign '0' to the left branch and '1' to the right branch of each node."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "**Step 7:** Traverse the tree to generate the Huffman code for each character."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 7
     Set sld = ppt.Slides.Add(7, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymers in Medicine and Surgery: Biomaterials"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Prefix Codes and Ambiguity Prevention"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -324,38 +370,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Biomaterials are materials used in the body without causing adverse effects."
+    para.Text = "Huffman codes are prefix codes, meaning no code is a prefix of another. This prevents ambiguity during decoding."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymer biomaterials are increasingly important in diagnostic, surgical, and therapeutic applications."
+    para.Text = "The tree structure ensures that no code can be confused with another.  For example, if 'A' is encoded as '0' and 'B' is encoded as '01', there's no ambiguity."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Key characteristics of biomedical polymers include biocompatibility (lack of harmful reactions), purity, reproducibility, sterilizability without property alteration, and optimal physical and chemical properties."
+    para.Text = "This prefix property is crucial for efficient and unambiguous decoding."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "The choice of polymer depends heavily on the specific application and required properties (e.g., strength, flexibility, biodegradability)."
+    para.Text = "The tree structure itself needs to be transmitted along with the encoded data for proper decoding. However, efficient methods exist to represent the tree concisely."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Ongoing research focuses on developing new biocompatible polymers with improved properties for various medical uses."
+    para.Text = "The overhead of transmitting the tree is usually small compared to the compression achieved."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 8
     Set sld = ppt.Slides.Add(8, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Conclusion: The Versatility of Polymers"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Encoding and Decoding Example & Code Implementation Overview"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -363,25 +409,52 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymers are versatile materials with a wide range of applications, from everyday plastics to advanced biomedical devices."
+    para.Text = "Illustrate an encoding and decoding example using a sample string and its Huffman tree. Show the original string, frequency table, Huffman tree, generated codes, encoded string, and the decoding process."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Understanding the different types of polymerization, their properties, and the factors influencing conductivity is crucial for designing new materials."
+    para.Text = "Briefly show a high-level overview of the code (C/C++ or Python) used to implement the Huffman coding algorithm, highlighting key functions like building the tree, encoding, and decoding.  Focus on the data structures used (min-heap, tree nodes).  Avoid showing extensive code snippets."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    ' Add slide 9
+    Set sld = ppt.Slides.Add(9, ppLayoutText)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Conclusion: Efficiency and Applications of Huffman Coding"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
+    Set tf = shp.TextFrame
+    tf.WordWrap = True
+    tf.AutoSize = ppAutoSizeShapeToFitText
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Huffman coding provides a highly efficient way to compress data, especially for text and other data with frequently occurring symbols."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "The development of biocompatible polymers is driving innovation in medicine and surgery, offering improved treatments and therapies."
+    para.Text = "The compression ratio depends on the distribution of character frequencies in the input data."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Continued research in polymer chemistry will undoubtedly lead to further advancements in various fields."
+    para.Text = "It's a lossless compression method; no information is lost during compression or decompression."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Huffman coding is widely applied in various fields, including data compression utilities, image and audio compression, and network communication."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "While it's not the most advanced compression algorithm, it provides a solid foundation for understanding more sophisticated techniques.  It's often used as a building block in more complex compression methods."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14

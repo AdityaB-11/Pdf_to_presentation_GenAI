@@ -76,7 +76,7 @@ def upload_file():
         {
             'key': key,
             'name': theme['name'],
-            'preview': f'/static/theme_images/{theme["preview"]}'  # Update path format
+            'preview': f'/static/theme_images/{theme["preview"]}'
         }
         for key, theme in THEMES.items()
     ]
@@ -91,6 +91,9 @@ def upload_file():
         # Get selected theme
         theme_key = request.form.get('theme', 'theme1')
         
+        # Get the creator name from the form
+        creator_name = request.form.get('creator_name', '')
+        
         if file and allowed_file(file.filename):
             try:
                 filename = secure_filename(file.filename)
@@ -102,9 +105,20 @@ def upload_file():
                 Text_extract.extract_text_and_images_from_pdf(pdf_path, app.config['EXTRACT_FOLDER'])
                 print("Extracted text and images from PDF")
                 
-                # Generate VBA code
-                txt_to_vba.main()
-                print("Generated VBA code")
+                # Read the extracted content
+                content = txt_to_vba.read_input_files(app.config['EXTRACT_FOLDER'])
+                
+                # Generate outline using Gemini
+                num_content_slides = 6  # You can adjust this number as needed
+                gemini_output = txt_to_vba.generate_outline_with_gemini(content, num_content_slides)
+                
+                # Generate VBA code with creator name
+                slides = txt_to_vba.parse_gemini_output(gemini_output)
+                vba_code = txt_to_vba.generate_vba_code(slides, creator_name)
+                
+                # Save the VBA code
+                with open('create_presentation.vba', 'w', encoding='utf-8') as f:
+                    f.write(vba_code)
                 
                 # Set output path for PowerPoint
                 ppt_output_path = os.path.join(app.config['OUTPUT_FOLDER'], 'generated_presentation.pptx')

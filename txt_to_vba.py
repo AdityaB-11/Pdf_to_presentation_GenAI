@@ -124,7 +124,7 @@ def parse_gemini_output(output):
 
     return slides
 
-def generate_vba_code(slides):
+def generate_vba_code(slides, creator_name=None):
     # Print debugging information
     print("Debugging: Number of slides:", len(slides))
     for i, slide in enumerate(slides):
@@ -145,6 +145,16 @@ Sub CreatePresentation()
     Set sld = ppt.Slides.Add(1, ppLayoutTitle)
     sld.Shapes.Title.TextFrame.TextRange.Text = "{slides[0]['title']}"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    
+    ' Add creator name if provided
+    If sld.Shapes.HasTitle Then
+        Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 400, 600, 50)
+        Set tf = shp.TextFrame
+        tf.TextRange.Text = "Created by: {creator_name if creator_name else ''}"
+        tf.TextRange.Font.Size = 14
+        tf.TextRange.Font.Color.RGB = RGB(128, 128, 128)  ' Gray color
+        tf.HorizontalAlignment = ppAlignCenter
+    End If
 
     ' Add index slide
     Set sld = ppt.Slides.Add(2, ppLayoutText)
