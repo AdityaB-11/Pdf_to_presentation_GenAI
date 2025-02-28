@@ -25,7 +25,7 @@ def read_input_files(folder_path):
     return combined_content[:8000] 
 
 def generate_outline_with_gemini(content, num_content_slides):
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash')
     
     prompt = f"""
     Create a detailed PowerPoint presentation outline based on the following content:
