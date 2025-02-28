@@ -1,8 +1,7 @@
 import pdfplumber
 import os
 import fitz  # PyMuPDF
-from PIL import Image
-import io
+import re
 
 def extract_text_from_pdf(pdf_path, output_dir):
     """
@@ -18,18 +17,21 @@ def extract_text_and_images_from_pdf(pdf_path, output_dir):
     images_dir = os.path.join(output_dir, "images")
     os.makedirs(images_dir, exist_ok=True)
 
+    # Dictionary to store image titles
+    image_titles = {}
+
     # Get the base name of the PDF file (without extension)
     pdf_name = os.path.splitext(os.path.basename(pdf_path))[0]
 
-    # Extract text and tables using pdfplumber
+    # First pass: Extract text and identify potential image titles
     try:
         with pdfplumber.open(pdf_path) as pdf:
             for page_num, page in enumerate(pdf.pages, 1):
                 text = page.extract_text()
                 tables = page.extract_tables()
 
+                # Save text content
                 output_file = os.path.join(output_dir, f"{pdf_name}_page_{page_num}.txt")
-                
                 with open(output_file, 'w', encoding='utf-8') as f:
                     f.write(text + "\n\n")
                     for table in tables:
@@ -37,37 +39,66 @@ def extract_text_and_images_from_pdf(pdf_path, output_dir):
                             f.write(" | ".join(str(cell) for cell in row) + "\n")
                         f.write("\n")
 
-                print(f"Text and data extracted from page {page_num} and saved in {output_file}")
+                # Look for potential image titles in the text
+                # Common patterns for image titles
+                title_patterns = [
+                    r'(?:Figure|Fig\.|FIGURE)\s*(\d+)[:\.]?\s*([^\n\.]+)',
+                    r'(?:Diagram|DIAGRAM)\s*(\d+)[:\.]?\s*([^\n\.]+)',
+                    r'(?:Image|IMAGE)\s*(\d+)[:\.]?\s*([^\n\.]+)',
+                    r'(?:Illustration|ILLUSTRATION)\s*(\d+)[:\.]?\s*([^\n\.]+)'
+                ]
 
-        # Extract images using PyMuPDF
+                for pattern in title_patterns:
+                    matches = re.finditer(pattern, text, re.IGNORECASE)
+                    for match in matches:
+                        fig_num = match.group(1)
+                        title = match.group(2).strip()
+                        image_titles[f"page_{page_num}_img_{fig_num}"] = title
+
+        # Second pass: Extract and save images with titles
         doc = fitz.open(pdf_path)
-        image_count = 0
-        
         for page_num in range(len(doc)):
             page = doc[page_num]
             image_list = page.get_images()
             
-            for img_index, img in enumerate(image_list):
+            for img_index, img in enumerate(image_list, 1):
                 xref = img[0]
                 base_image = doc.extract_image(xref)
                 image_bytes = base_image["image"]
                 image_ext = base_image["ext"]
                 
-                # Save image
-                image_filename = f"{pdf_name}_page_{page_num + 1}_img_{img_index + 1}.{image_ext}"
+                # Generate image filename
+                image_filename = f"{pdf_name}_page_{page_num + 1}_img_{img_index}.{image_ext}"
                 image_path = os.path.join(images_dir, image_filename)
                 
+                # Save image
                 with open(image_path, "wb") as image_file:
                     image_file.write(image_bytes)
-                image_count += 1
-                
-                print(f"Extracted image {image_filename}")
-        
-        print(f"Extraction complete. Found {image_count} images.")
-        return images_dir  # Return the path where images are stored
+
+                # Save image title if found, otherwise use a default title
+                title_key = f"page_{page_num + 1}_img_{img_index}"
+                if title_key not in image_titles:
+                    # Try to extract title from surrounding text
+                    surrounding_text = page.get_text("text", clip=(img[1], img[2], img[3], img[4]))
+                    # Look for potential title in the text above the image
+                    lines = surrounding_text.split('\n')
+                    for line in lines:
+                        if line.strip() and len(line.strip()) > 5:  # Reasonable title length
+                            image_titles[title_key] = line.strip()
+                            break
+                    if title_key not in image_titles:
+                        image_titles[title_key] = f"Figure {img_index}"
+
+        # Save image titles to a file
+        titles_file = os.path.join(output_dir, "image_titles.txt")
+        with open(titles_file, 'w', encoding='utf-8') as f:
+            for key, title in image_titles.items():
+                f.write(f"{key}|{title}\n")
+
+        return images_dir, image_titles
 
     except Exception as e:
         print(f"Error processing PDF: {e}")
-        return None
+        return None, None
 
 # Remove the example usage from here

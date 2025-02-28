@@ -199,6 +199,107 @@
             padding: 20px;
             margin-top: 40px;
         }
+        .theme-selector {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .theme-selector h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 15px;
+            justify-items: center;
+        }
+
+        .theme-option {
+            position: relative;
+            width: 250px;
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .theme-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .theme-option input[type="radio"] {
+            display: none;
+        }
+
+        .theme-option input[type="radio"]:checked + label .theme-preview {
+            box-shadow: 0 0 0 3px var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .theme-option label {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-option label span {
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 1.1em;
+        }
+
+        .theme-preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-option label:hover .theme-preview-overlay {
+            opacity: 1;
+        }
+
+        .preview-button {
+            background: white;
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .theme-options {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .theme-option {
+                width: 200px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -250,15 +351,38 @@
                 {{ message }}
             </div>
             {% endif %}
-            <form method="post" enctype="multipart/form-data" id="upload-form">
+            <form method="post" enctype="multipart/form-data" id="convert-form">
                 <div class="file-input-container">
-                    <input type="file" name="file" accept=".pdf" id="file-input" class="file-input">
-                    <label for="file-input" class="file-label">Choose PDF File</label>
+                    <label for="file" class="file-label">Choose PDF File</label>
+                    <input type="file" id="file" name="file" class="file-input" accept=".pdf" required>
                     <div id="file-name"></div>
                 </div>
-                <button type="submit" class="submit-btn" id="submit-btn" disabled>Convert to PowerPoint</button>
+
+                <!-- Add Theme Selector -->
+                <div class="theme-selector">
+                    <h3>Select Presentation Theme</h3>
+                    <div class="theme-options">
+                        {% for theme in themes %}
+                        <div class="theme-option">
+                            <input type="radio" id="theme-{{ theme.key }}" name="theme" value="{{ theme.key }}" 
+                                   {% if theme.key == 'theme1' %}checked{% endif %}>
+                            <label for="theme-{{ theme.key }}">
+                                <div class="theme-preview">
+                                    <img src="{{ theme.preview }}" alt="{{ theme.name }}" loading="lazy">
+                                    <div class="theme-preview-overlay">
+                                        <span class="preview-button">Select Theme</span>
+                                    </div>
+                                </div>
+                                <span>{{ theme.name }}</span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submit-btn">Convert to PowerPoint</button>
             </form>
-            <div class="loading" id="loading">AI magic in progress... Your PowerPoint is being crafted!</div>
+            <div class="loading" id="loading">Converting... Please wait</div>
         </section>
 
         <section id="about">
@@ -272,25 +396,53 @@
     </footer>
 
     <script>
-        const fileInput = document.getElementById('file-input');
-        const fileName = document.getElementById('file-name');
-        const submitBtn = document.getElementById('submit-btn');
-        const uploadForm = document.getElementById('upload-form');
-        const loading = document.getElementById('loading');
-
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                fileName.textContent = `Selected file: ${e.target.files[0].name}`;
-                submitBtn.disabled = false;
-            } else {
-                fileName.textContent = '';
-                submitBtn.disabled = true;
-            }
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('file-name').textContent = fileName;
         });
 
-        uploadForm.addEventListener('submit', (e) => {
-            loading.style.display = 'block';
-            submitBtn.disabled = true;
+        document.getElementById('convert-form').addEventListener('submit', function() {
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle theme selection
+            const themeOptions = document.querySelectorAll('.theme-option input[type="radio"]');
+            const themeImages = document.querySelectorAll('.theme-preview img');
+
+            // Preload images
+            themeImages.forEach(img => {
+                const src = img.src;
+                const newImg = new Image();
+                newImg.src = src;
+            });
+
+            themeOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.theme-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to chosen option
+                    if (this.checked) {
+                        this.closest('.theme-option').classList.add('selected');
+                        console.log('Selected theme:', this.value);
+                    }
+                });
+            });
+
+            // Handle form submission
+            const form = document.getElementById('convert-form');
+            form.addEventListener('submit', function(e) {
+                const selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+                console.log('Submitting with theme:', selectedTheme);
+                
+                // Show loading state
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('loading').style.display = 'block';
+            });
         });
     </script>
 </body>

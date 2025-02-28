@@ -47,7 +47,7 @@ def generate_outline_with_gemini(content, num_content_slides):
     Title: [Presentation Title]
 
     [Slide 2]
-    Title: Index
+    Title: Index(each on newline)
     - 1: [First Content Slide Title]
     - 2: [Second Content Slide Title]
     - 3: [Third Content Slide Title]
@@ -62,8 +62,7 @@ def generate_outline_with_gemini(content, num_content_slides):
     - [Key Point 3 - Detailed sentence]
     - [Key Point 4 - Detailed sentence]
     - [Key Point 5 - Detailed sentence]
-    - [Key Point 6 - Detailed sentence] (optional)
-    - [Key Point 7 - Detailed sentence] (optional)
+    
 
     ... (continue for all content slides and conclusion)
 
@@ -154,25 +153,47 @@ Sub CreatePresentation()
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
     tf.WordWrap = True
+    tf.MarginLeft = 20
+    tf.MarginRight = 20
 
     ' Add index content
 """
 
-    # Add index content
+    # Add index content with each title on a new line
     for i, slide in enumerate(slides[2:], start=1):  # Skip title and index slides
         vba_code += f"""
+    ' Add number
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "{i}: {slide['title'].replace('"', '""')}"
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Text = "{i}."
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceAfter = 0
+    para.ParagraphFormat.SpaceBefore = 6
+    
+    ' Add title on next line
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "{slide['title'].replace('"', '""')}"
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Size = 14
+    para.ParagraphFormat.LeftIndent = 20
+    para.ParagraphFormat.SpaceAfter = 12
+    para.ParagraphFormat.SpaceBefore = 0
 """
 
-    # Add Conclusion
+    # Add Conclusion with consistent formatting
     vba_code += """
+    ' Add blank line before conclusion
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = ""
+    para.ParagraphFormat.SpaceAfter = 6
+    
     Set para = tf.TextRange.Paragraphs.Add
     para.Text = "Conclusion"
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceBefore = 6
 """
 
     # Add content slides
