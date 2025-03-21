@@ -19,6 +19,7 @@ def extract_text_and_images_from_pdf(pdf_path, output_dir):
 
     # Dictionary to store image titles
     image_titles = {}
+    images_found = False
 
     # Get the base name of the PDF file (without extension)
     pdf_name = os.path.splitext(os.path.basename(pdf_path))[0]
@@ -61,33 +62,40 @@ def extract_text_and_images_from_pdf(pdf_path, output_dir):
             page = doc[page_num]
             image_list = page.get_images()
             
+            if image_list:
+                images_found = True
+                
             for img_index, img in enumerate(image_list, 1):
                 xref = img[0]
-                base_image = doc.extract_image(xref)
-                image_bytes = base_image["image"]
-                image_ext = base_image["ext"]
-                
-                # Generate image filename
-                image_filename = f"{pdf_name}_page_{page_num + 1}_img_{img_index}.{image_ext}"
-                image_path = os.path.join(images_dir, image_filename)
-                
-                # Save image
-                with open(image_path, "wb") as image_file:
-                    image_file.write(image_bytes)
+                try:
+                    base_image = doc.extract_image(xref)
+                    image_bytes = base_image["image"]
+                    image_ext = base_image["ext"]
+                    
+                    # Generate image filename
+                    image_filename = f"{pdf_name}_page_{page_num + 1}_img_{img_index}.{image_ext}"
+                    image_path = os.path.join(images_dir, image_filename)
+                    
+                    # Save image
+                    with open(image_path, "wb") as image_file:
+                        image_file.write(image_bytes)
 
-                # Save image title if found, otherwise use a default title
-                title_key = f"page_{page_num + 1}_img_{img_index}"
-                if title_key not in image_titles:
-                    # Try to extract title from surrounding text
-                    surrounding_text = page.get_text("text", clip=(img[1], img[2], img[3], img[4]))
-                    # Look for potential title in the text above the image
-                    lines = surrounding_text.split('\n')
-                    for line in lines:
-                        if line.strip() and len(line.strip()) > 5:  # Reasonable title length
-                            image_titles[title_key] = line.strip()
-                            break
+                    # Save image title if found, otherwise use a default title
+                    title_key = f"page_{page_num + 1}_img_{img_index}"
                     if title_key not in image_titles:
-                        image_titles[title_key] = f"Figure {img_index}"
+                        # Try to extract title from surrounding text
+                        surrounding_text = page.get_text("text", clip=(img[1], img[2], img[3], img[4]))
+                        # Look for potential title in the text above the image
+                        lines = surrounding_text.split('\n')
+                        for line in lines:
+                            if line.strip() and len(line.strip()) > 5:  # Reasonable title length
+                                image_titles[title_key] = line.strip()
+                                break
+                        if title_key not in image_titles:
+                            image_titles[title_key] = f"Figure {img_index}"
+                except Exception as img_error:
+                    print(f"Error extracting image {img_index} on page {page_num + 1}: {img_error}")
+                    continue
 
         # Save image titles to a file
         titles_file = os.path.join(output_dir, "image_titles.txt")
@@ -95,10 +103,21 @@ def extract_text_and_images_from_pdf(pdf_path, output_dir):
             for key, title in image_titles.items():
                 f.write(f"{key}|{title}\n")
 
+        if not images_found:
+            print(f"No images found in {pdf_path}")
+            # Create a marker file to indicate no images were found
+            with open(os.path.join(images_dir, "no_images.txt"), 'w') as f:
+                f.write("No images were found in this PDF.")
+
         return images_dir, image_titles
 
     except Exception as e:
         print(f"Error processing PDF: {e}")
-        return None, None
+        # Ensure the images directory exists even if there was an error
+        os.makedirs(images_dir, exist_ok=True)
+        # Create a marker file to indicate an error occurred
+        with open(os.path.join(images_dir, "extraction_error.txt"), 'w') as f:
+            f.write(f"Error processing PDF: {str(e)}")
+        return images_dir, {}
 
 # Remove the example usage from here

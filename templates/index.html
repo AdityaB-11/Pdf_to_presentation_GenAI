@@ -7,22 +7,114 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #50e3c2;
-            --dark-color: #2c3e50;
-            --light-color: #f4f7f9;
+            /* Dark Theme (Default) */
+            --primary-color: #635bff;
+            --secondary-color: #7A5AF8;
+            --dark-color: #121212;
+            --medium-dark-color: #1e1e1e;
+            --medium-color: #2d2d2d;
+            --light-color: #f8f9fa;
+            --text-primary: #e4e6eb;
+            --text-secondary: #b0b3b8;
+            --text-tertiary: #8e9297;
+            --accent-color: #00D5BD;
+            --danger-color: #ff4d4f;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --background-color: var(--dark-color);
+            --card-background: var(--medium-dark-color);
+            --input-background: var(--medium-color);
+            --border-color: rgba(255,255,255,0.05);
+            --border-hover: rgba(255,255,255,0.1);
         }
+
+        body.light-mode {
+            /* Light Theme */
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --input-background: #f0f2f5;
+            --text-primary: #333333;
+            --text-secondary: #4e5968;
+            --text-tertiary: #65676b;
+            --border-color: rgba(0,0,0,0.05);
+            --border-hover: rgba(0,0,0,0.1);
+            --medium-dark-color: #ffffff;
+            --medium-color: #f0f2f5;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             line-height: 1.6;
-            color: var(--dark-color);
+            color: var(--text-primary);
             margin: 0;
             padding: 0;
-            background-color: var(--light-color);
+            background-color: var(--background-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
+        /* Input Animations */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes focusGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 91, 255, 0.1);
+            }
+            70% {
+                box-shadow: 0 0 0 5px rgba(99, 91, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 91, 255, 0);
+            }
+        }
+        
+        .form-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            margin-bottom: 30px;
+            pointer-events: none;
+        }
+        
+        .form-section.appear {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-range:focus {
+            animation: focusGlow 2s infinite;
+        }
+        
+        /* Staggered animation delays */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+        .delay-7 { transition-delay: 0.7s; }
+        
         .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: var(--card-background);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             position: fixed;
             width: 100%;
             top: 0;
@@ -42,40 +134,52 @@
             color: var(--primary-color);
         }
         .nav-links a {
-            color: var(--dark-color);
+            color: var(--text-primary);
             text-decoration: none;
             margin-left: 20px;
             font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
         }
         .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: linear-gradient(135deg, var(--card-background), var(--input-background));
+            color: var(--text-primary);
             text-align: center;
             padding: 100px 20px;
             margin-top: 60px;
+            border-bottom: 1px solid var(--border-color);
         }
         .hero h1 {
             font-size: 3em;
             margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .hero p {
             font-size: 1.2em;
             max-width: 600px;
             margin: 0 auto 30px;
+            color: var(--text-secondary);
         }
         .cta-button {
             display: inline-block;
-            background-color: white;
-            color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
             padding: 12px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s ease;
+            border: none;
         }
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+            background-color: #7670ff;
         }
         .container {
             max-width: 1200px;
@@ -90,23 +194,29 @@
             margin-top: 40px;
         }
         .feature {
-            background-color: white;
-            border-radius: 8px;
+            background-color: var(--card-background);
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         .feature:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-hover);
         }
         .feature-icon {
             font-size: 3em;
             margin-bottom: 20px;
-            color: var(--primary-color);
+            color: var(--accent-color);
         }
         .feature h3 {
             margin-top: 0;
+            color: var(--text-primary);
+        }
+        .feature p {
+            color: var(--text-secondary);
         }
         @media (max-width: 768px) {
             .features {
@@ -114,13 +224,14 @@
             }
         }
         .converter {
-            background-color: white;
-            border-radius: 8px;
+            background-color: var(--card-background);
+            border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             text-align: center;
             max-width: 600px;
             margin: 40px auto;
+            border: 1px solid var(--border-color);
         }
         .converter h2 {
             margin-bottom: 20px;
@@ -135,25 +246,27 @@
         .file-label {
             display: inline-block;
             padding: 12px 30px;
-            background-color: var(--primary-color);
-            color: white;
+            background-color: var(--input-background);
+            color: var(--text-primary);
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
+            border: 1px solid var(--border-color);
         }
         .file-label:hover {
-            background-color: #3a7bc8;
+            background-color: rgba(99, 91, 255, 0.15);
+            border-color: var(--primary-color);
         }
         #file-name {
             margin-top: 10px;
             font-style: italic;
-            color: #666;
+            color: var(--text-tertiary);
         }
         .submit-btn {
             display: inline-block;
             padding: 12px 30px;
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
             color: white;
             border: none;
             border-radius: 30px;
@@ -163,47 +276,51 @@
             transition: all 0.3s ease;
         }
         .submit-btn:hover {
-            background-color: #3fcfae;
+            background-color: #7670ff;
+            box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
         }
         .submit-btn:disabled {
-            background-color: #95a5a6;
+            background-color: #555;
             cursor: not-allowed;
+            box-shadow: none;
         }
         .loading {
             display: none;
             text-align: center;
             margin-top: 20px;
             font-weight: bold;
-            color: var(--primary-color);
+            color: var(--accent-color);
         }
         .message {
             padding: 15px;
             margin-bottom: 20px;
-            border-radius: 4px;
+            border-radius: 8px;
             font-weight: bold;
         }
         .error {
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
+            background-color: rgba(255, 77, 79, 0.15);
+            border: 1px solid rgba(255, 77, 79, 0.3);
+            color: #ff4d4f;
         }
         .success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+            background-color: rgba(82, 196, 26, 0.15);
+            border: 1px solid rgba(82, 196, 26, 0.3);
+            color: #52c41a;
         }
         footer {
-            background-color: var(--dark-color);
-            color: white;
+            background-color: var(--card-background);
+            color: var(--text-tertiary);
             text-align: center;
             padding: 20px;
             margin-top: 40px;
+            border-top: 1px solid var(--border-color);
         }
         .theme-selector {
             margin: 30px 0;
             padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            background: var(--input-background);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         .theme-selector h3 {
@@ -231,7 +348,8 @@
             border-radius: 8px;
             overflow: hidden;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
         }
 
         .theme-preview img {
@@ -260,7 +378,7 @@
 
         .theme-option label span {
             font-weight: 500;
-            color: var(--dark-color);
+            color: var(--text-primary);
             font-size: 1.1em;
         }
 
@@ -270,7 +388,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -284,11 +402,44 @@
         }
 
         .preview-button {
-            background: white;
-            color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: bold;
+        }
+
+        .creator-input-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .creator-input-container input {
+            padding: 12px 15px !important;
+            border-radius: 8px !important;
+            border: 1px solid var(--border-color) !important;
+            width: 100% !important;
+            max-width: 300px !important;
+            background-color: var(--input-background) !important;
+            color: var(--text-primary) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .creator-input-container input:focus {
+            border-color: var(--primary-color) !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.2) !important;
+        }
+        
+        #about h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        #about p {
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         @media (max-width: 768px) {
@@ -300,6 +451,73 @@
                 width: 200px;
             }
         }
+
+        /* Mode Toggle */
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--input-background);
+            transition: .4s;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .theme-toggle input:checked + .theme-slider {
+            background-color: var(--input-background);
+        }
+        
+        .theme-toggle input:checked + .theme-slider:before {
+            transform: translateX(29px);
+            background-color: #333;
+        }
+        
+        .sun-icon, .moon-icon {
+            font-size: 14px;
+            z-index: 1;
+        }
+        
+        .sun-icon {
+            color: #f39c12;
+        }
+        
+        .moon-icon {
+            color: #9b59b6;
+        }
     </style>
 </head>
 <body>
@@ -309,7 +527,15 @@
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#converter">Convert</a>
+                <a href="/topic-generator">Topic Generator</a>
                 <a href="#about">About</a>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-slider">
+                        <span class="sun-icon">☀️</span>
+                        <span class="moon-icon">🌙</span>
+                    </span>
+                </label>
             </div>
         </div>
     </nav>
@@ -352,14 +578,14 @@
             </div>
             {% endif %}
             <form method="post" enctype="multipart/form-data" id="convert-form">
-                <div class="file-input-container">
+                <div class="file-input-container form-section delay-1">
                     <label for="file" class="file-label">Choose PDF File</label>
                     <input type="file" id="file" name="file" class="file-input" accept=".pdf" required>
                     <div id="file-name"></div>
                 </div>
 
                 <!-- Add Theme Selector -->
-                <div class="theme-selector">
+                <div class="theme-selector form-section delay-2">
                     <h3>Select Presentation Theme</h3>
                     <div class="theme-options">
                         {% for theme in themes %}
@@ -381,20 +607,37 @@
                 </div>
 
                 <!-- Add Creator Name Input -->
-                <div class="creator-input-container" style="margin: 20px 0;">
+                <div class="creator-input-container form-section delay-3" style="margin: 20px 0;">
                     <h3>Creator Name</h3>
                     <input type="text" 
                            id="creator-name" 
                            name="creator_name" 
-                           placeholder="Enter your name" 
-                           style="padding: 8px 12px; 
-                                  border-radius: 4px; 
-                                  border: 1px solid #ccc; 
-                                  width: 100%; 
-                                  max-width: 300px;">
+                           placeholder="Enter your name"
+                           class="form-input">
                 </div>
 
-                <button type="submit" class="submit-btn" id="submit-btn">Convert to PowerPoint</button>
+                <!-- Add Presentation Rules Input -->
+                <div class="form-section delay-4" style="margin: 20px 0;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Presentation Rules (Optional)</h3>
+                    <textarea name="presentation_rules" 
+                              id="presentation-rules" 
+                              placeholder="Enter strict rules for your presentation format (e.g., 'use only bullet points', 'limit each slide to 5 points', 'include at least one table for data slides', 'use diagrams instead of text where possible')"
+                              class="form-textarea"
+                              style="padding: 12px 15px; 
+                                     border-radius: 8px; 
+                                     border: 1px solid var(--border-color); 
+                                     width: 100%; 
+                                     max-width: 500px;
+                                     height: 100px;
+                                     background-color: var(--input-background);
+                                     color: var(--text-primary);
+                                     resize: vertical;"></textarea>
+                    
+                </div>
+
+                <div class="form-section delay-5">
+                    <button type="submit" class="submit-btn" id="submit-btn">Convert to PowerPoint</button>
+                </div>
             </form>
             <div class="loading" id="loading">Converting... Please wait</div>
         </section>
@@ -421,6 +664,29 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // Check for saved theme preference or use default dark theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.checked = true;
+            }
+            
+            // Handle theme toggle
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Switch to light mode
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    // Switch to dark mode
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
             // Handle theme selection
             const themeOptions = document.querySelectorAll('.theme-option input[type="radio"]');
             const themeImages = document.querySelectorAll('.theme-preview img');
@@ -456,6 +722,17 @@
                 // Show loading state
                 document.getElementById('submit-btn').disabled = true;
                 document.getElementById('loading').style.display = 'block';
+            });
+            
+            // Animation functionality
+            const formSections = document.querySelectorAll('.form-section');
+            
+            // Sequentially show form sections one after another
+            formSections.forEach((section, index) => {
+                // Add appear class with staggered timing
+                setTimeout(() => {
+                    section.classList.add('appear');
+                }, 300 + (index * 200)); // Base delay + staggered delay
             });
         });
     </script>

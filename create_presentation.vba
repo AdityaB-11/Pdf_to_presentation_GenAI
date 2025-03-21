@@ -11,14 +11,14 @@ Sub CreatePresentation()
 
     ' Add title slide
     Set sld = ppt.Slides.Add(1, ppLayoutTitle)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymer Chemistry: Types, Properties, and Biomedical Applications"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Unveiling the Power of Neural Networks: A Deep Dive"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     
     ' Add creator name if provided
     If sld.Shapes.HasTitle Then
         Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 400, 600, 50)
         Set tf = shp.TextFrame
-        tf.TextRange.Text = "Created by: shreyash katole"
+        tf.TextRange.Text = "Created by: Aditya Bhogil"
         tf.TextRange.Font.Size = 14
         tf.TextRange.Font.Color.RGB = RGB(128, 128, 128)  ' Gray color
         tf.HorizontalAlignment = ppAlignCenter
@@ -47,7 +47,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation Polymerization: Step-Growth Reaction"
+    para.Text = "Introduction to Neural Networks"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -65,7 +65,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymer Applications: Examples in Daily Life"
+    para.Text = "Biological Inspiration and Artificial Neurons"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -83,7 +83,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conducting Polymers: Electrical Conductivity in Polymers"
+    para.Text = "Types of Neural Networks"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -101,7 +101,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Types of Conducting Polymers and Doping"
+    para.Text = "How Neural Networks Learn: Backpropagation"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -119,7 +119,7 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymers in Medicine and Surgery: Biomaterials"
+    para.Text = "Activation Functions and their Role"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -137,7 +137,61 @@ Sub CreatePresentation()
     
     ' Add title on next line
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conclusion: The Versatile World of Polymers"
+    para.Text = "Applications of Neural Networks"
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Size = 14
+    para.ParagraphFormat.LeftIndent = 20
+    para.ParagraphFormat.SpaceAfter = 12
+    para.ParagraphFormat.SpaceBefore = 0
+
+    ' Add number
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "7."
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceAfter = 0
+    para.ParagraphFormat.SpaceBefore = 6
+    
+    ' Add title on next line
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Challenges and Limitations"
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Size = 14
+    para.ParagraphFormat.LeftIndent = 20
+    para.ParagraphFormat.SpaceAfter = 12
+    para.ParagraphFormat.SpaceBefore = 0
+
+    ' Add number
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "8."
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceAfter = 0
+    para.ParagraphFormat.SpaceBefore = 6
+    
+    ' Add title on next line
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "The Future of Neural Networks"
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Size = 14
+    para.ParagraphFormat.LeftIndent = 20
+    para.ParagraphFormat.SpaceAfter = 12
+    para.ParagraphFormat.SpaceBefore = 0
+
+    ' Add number
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "9."
+    para.ParagraphFormat.Bullet.Visible = False
+    para.Font.Bold = True
+    para.Font.Size = 14
+    para.ParagraphFormat.SpaceAfter = 0
+    para.ParagraphFormat.SpaceBefore = 6
+    
+    ' Add title on next line
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Conclusion: Key Takeaways and Future Directions"
     para.ParagraphFormat.Bullet.Visible = False
     para.Font.Size = 14
     para.ParagraphFormat.LeftIndent = 20
@@ -158,7 +212,7 @@ Sub CreatePresentation()
 
     ' Add slide 3
     Set sld = ppt.Slides.Add(3, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Condensation Polymerization: Step-Growth Reaction"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Introduction to Neural Networks"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -166,50 +220,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation polymerization requires monomers with at least two functional groups capable of reacting with each other."
+    para.Text = "Definition of a neural network: interconnected nodes (neurons) processing information."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "These functional groups react, forming a bond between monomers and releasing a small molecule as a byproduct (e.g., water, ammonia, hydrogen chloride)."
+    para.Text = "Neural networks as a subset of machine learning and artificial intelligence."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Mineral acids or bases commonly serve as catalysts in condensation polymerization."
+    para.Text = "Ability to learn from data without explicit programming."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Unlike addition polymerization, this process is endothermic, absorbing heat."
+    para.Text = "Focus on pattern recognition and prediction."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "It is generally a slower process than addition polymerization."
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
-    para.Font.Size = 14
-
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Condensation polymers typically have higher molecular weights than addition polymers."
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
-    para.Font.Size = 14
-
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "This method often results in three-dimensional, cross-linked, thermosetting polymers."
+    para.Text = "Overview of the presentation's scope and objectives."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 4
     Set sld = ppt.Slides.Add(4, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymer Applications: Examples in Daily Life"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Biological Inspiration and Artificial Neurons"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -217,44 +259,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polyethylene is widely used in disposable syringes due to its flexibility and low cost."
+    para.Text = "The biological neuron as a model for artificial neurons."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polypropylene's strength and biocompatibility make it suitable for heart walls and blood filters."
+    para.Text = "Structure of an artificial neuron: inputs, weights, summation, activation function, output."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polyvinyl chloride (PVC) also finds application in disposable syringes."
+    para.Text = "Synapses and their representation as weights in the network."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Acrylic hydrogels are employed in grafting procedures due to their biocompatibility and water-absorbing properties."
+    para.Text = "The role of the activation function in introducing non-linearity."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymethyl methacrylate (PMMA) is a common material for contact lenses owing to its transparency and biocompatibility."
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
-    para.Font.Size = 14
-
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Poly(alkyl sulfone) membranes are used in oxygenators for their gas permeability and biocompatibility."
+    para.Text = "Comparison of biological and artificial neurons."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 5
     Set sld = ppt.Slides.Add(5, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Conducting Polymers: Electrical Conductivity in Polymers"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Types of Neural Networks"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -262,38 +298,44 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Most polymers are electrical insulators because their electrons are tightly bound in sigma bonds, limiting mobility."
+    para.Text = "Feedforward Neural Networks (FNNs): Simple, layered architecture."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Conductivity is achieved in polymers through the presence of conjugated (alternating) double bonds, creating delocalized pi electrons."
+    para.Text = "Convolutional Neural Networks (CNNs): Specialized for image and video processing."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "These delocalized pi electrons can move relatively freely along the polymer chain under an electric field, enabling electrical conduction."
+    para.Text = "Recurrent Neural Networks (RNNs): Handling sequential data like text and time series."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "This creates a system of valence and conduction bands, similar to those in metals.  Examples include polyacetylene, polyanilines, and polythiophene."
+    para.Text = "Long Short-Term Memory (LSTM) networks: Addressing vanishing gradient problem in RNNs."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "The conductivity of these polymers can be further enhanced through doping."
+    para.Text = "Autoencoders: Used for dimensionality reduction and feature extraction."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Generative Adversarial Networks (GANs): Generating new data samples."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 6
     Set sld = ppt.Slides.Add(6, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Types of Conducting Polymers and Doping"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "How Neural Networks Learn: Backpropagation"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -301,44 +343,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Intrinsically conducting polymers (ICPs) possess delocalized electrons within their backbone structure (e.g., polyacetylene, polypyrrole, polythiophene)."
+    para.Text = "The concept of supervised learning in neural networks."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Extrinsically conducting polymers achieve conductivity through added components: filled polymers (conducting elements like carbon black dispersed in a polymer matrix) and blended polymers (blending conventional and conducting polymers)."
+    para.Text = "The process of forward propagation: input to output."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Doping increases conductivity by introducing charge carriers: p-doping (oxidation using Lewis acids, creating positive charges) and n-doping (reduction using Lewis bases, creating negative charges)."
+    para.Text = "Calculating the error (loss function)."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "P-doping examples include treatment with iodine or iron(III) chloride."
+    para.Text = "Backpropagation algorithm: adjusting weights to minimize error."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "N-doping examples include treatment with lithium or sodium."
-    para.ParagraphFormat.Bullet.Visible = True
-    para.ParagraphFormat.Bullet.RelativeSize = 1
-    para.Font.Size = 14
-
-    Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Coordination conducting polymers are formed by combining a metal atom with a polydentate ligand."
+    para.Text = "Gradient descent optimization: iterative weight updates."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 7
     Set sld = ppt.Slides.Add(7, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Polymers in Medicine and Surgery: Biomaterials"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Activation Functions and their Role"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -346,38 +382,38 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Biomaterials are materials used in medical applications without causing adverse effects.  Polymer biomaterials are increasingly important."
+    para.Text = "Purpose of activation functions: introducing non-linearity."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Key characteristics of biomedical polymers include biocompatibility (lack of harmful reactions with body tissues), purity and reproducibility, and sterilizability without property alteration."
+    para.Text = "Common activation functions: Sigmoid, ReLU, Tanh."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "They must possess optimal physical and chemical properties for their intended use."
+    para.Text = "Choosing the appropriate activation function for different tasks."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Biomedical polymers must not destroy blood cellular elements or enzymes, nor cause toxic or allergic reactions."
+    para.Text = "Impact of activation functions on network performance."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "They should also maintain electrolyte balance in the body."
+    para.Text = "Derivative of activation functions and its role in backpropagation."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     ' Add slide 8
     Set sld = ppt.Slides.Add(8, ppLayoutText)
-    sld.Shapes.Title.TextFrame.TextRange.Text = "Conclusion: The Versatile World of Polymers"
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Applications of Neural Networks"
     sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
     Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
     Set tf = shp.TextFrame
@@ -385,25 +421,154 @@ Sub CreatePresentation()
     tf.AutoSize = ppAutoSizeShapeToFitText
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Polymers exhibit a wide range of properties and applications, from everyday plastics to advanced biomaterials and conducting polymers."
+    para.Text = "Image recognition and object detection."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Understanding the different types of polymerization and the factors influencing polymer properties is crucial for designing materials with specific functionalities."
+    para.Text = "Natural language processing (NLP): machine translation, sentiment analysis."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "Continued research and development in polymer chemistry will lead to further innovations in various fields, including medicine, electronics, and materials science."
+    para.Text = "Speech recognition and synthesis."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14
 
     Set para = tf.TextRange.Paragraphs.Add
-    para.Text = "The versatility of polymers makes them essential materials for modern technology and improving the quality of life."
+    para.Text = "Medical diagnosis and drug discovery."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Financial modeling and fraud detection."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Self-driving cars and robotics."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    ' Add slide 9
+    Set sld = ppt.Slides.Add(9, ppLayoutText)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Challenges and Limitations"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
+    Set tf = shp.TextFrame
+    tf.WordWrap = True
+    tf.AutoSize = ppAutoSizeShapeToFitText
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Data requirements: large datasets are often needed for effective training."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Computational cost: training complex networks can be computationally expensive."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Overfitting: the model performs well on training data but poorly on unseen data."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Interpretability: understanding the decision-making process of a neural network can be difficult."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Bias and fairness concerns: reflecting biases present in the training data."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    ' Add slide 10
+    Set sld = ppt.Slides.Add(10, ppLayoutText)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "The Future of Neural Networks"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
+    Set tf = shp.TextFrame
+    tf.WordWrap = True
+    tf.AutoSize = ppAutoSizeShapeToFitText
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Advancements in hardware (e.g., specialized chips)."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Development of more efficient algorithms."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "New architectures and network designs."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Increased focus on explainability and interpretability."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Ethical considerations and responsible AI development."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    ' Add slide 11
+    Set sld = ppt.Slides.Add(11, ppLayoutText)
+    sld.Shapes.Title.TextFrame.TextRange.Text = "Conclusion: Key Takeaways and Future Directions"
+    sld.Shapes.Title.TextFrame.TextRange.Font.Color.RGB = RGB(0, 0, 0)
+    Set shp = sld.Shapes.AddTextbox(msoTextOrientationHorizontal, 50, 50, 600, 400)
+    Set tf = shp.TextFrame
+    tf.WordWrap = True
+    tf.AutoSize = ppAutoSizeShapeToFitText
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Neural networks are powerful tools for pattern recognition and prediction."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Various types of neural networks cater to different tasks and data types."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Backpropagation and activation functions are crucial for training and performance."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "Despite their capabilities, challenges remain regarding data, computation, and interpretability."
+    para.ParagraphFormat.Bullet.Visible = True
+    para.ParagraphFormat.Bullet.RelativeSize = 1
+    para.Font.Size = 14
+
+    Set para = tf.TextRange.Paragraphs.Add
+    para.Text = "The future of neural networks is bright, with ongoing research and development pushing boundaries."
     para.ParagraphFormat.Bullet.Visible = True
     para.ParagraphFormat.Bullet.RelativeSize = 1
     para.Font.Size = 14

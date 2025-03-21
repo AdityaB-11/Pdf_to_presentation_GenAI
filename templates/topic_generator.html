@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Presentation Generator - Teach-Assist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --primary-color: #635bff;
+            --secondary-color: #7A5AF8;
+            --dark-color: #121212;
+            --medium-dark-color: #1e1e1e;
+            --medium-color: #2d2d2d;
+            --light-color: #f8f9fa;
+            --text-primary: #e4e6eb;
+            --text-secondary: #b0b3b8;
+            --text-tertiary: #8e9297;
+            --accent-color: #00D5BD;
+            --danger-color: #ff4d4f;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --background-color: var(--dark-color);
+            --card-background: var(--medium-dark-color);
+            --input-background: var(--medium-color);
+            --border-color: rgba(255,255,255,0.05);
+            --border-hover: rgba(255,255,255,0.1);
+        }
+
+        body.light-mode {
+            /* Light Theme */
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --input-background: #f0f2f5;
+            --text-primary: #333333;
+            --text-secondary: #4e5968;
+            --text-tertiary: #65676b;
+            --border-color: rgba(0,0,0,0.05);
+            --border-hover: rgba(0,0,0,0.1);
+            --medium-dark-color: #ffffff;
+            --medium-color: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Mode Toggle */
+        .theme-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            margin-left: 20px;
+        }
+        
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--input-background);
+            transition: .4s;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .theme-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .theme-toggle input:checked + .theme-slider {
+            background-color: var(--input-background);
+        }
+        
+        .theme-toggle input:checked + .theme-slider:before {
+            transform: translateX(29px);
+            background-color: #333;
+        }
+        
+        .sun-icon, .moon-icon {
+            font-size: 14px;
+            z-index: 1;
+        }
+        
+        .sun-icon {
+            color: #f39c12;
+        }
+        
+        .moon-icon {
+            color: #9b59b6;
+        }
+        
+        .navbar {
+            background-color: var(--card-background);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--card-background), var(--input-background));
+            color: var(--text-primary);
+            text-align: center;
+            padding: 100px 20px;
+            margin-top: 60px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--text-secondary);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+            background-color: #7670ff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 95%;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .topic-generator {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            max-width: 800px;
+            margin: 40px auto;
+            border: 1px solid var(--border-color);
+        }
+        
+        .topic-generator h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .error {
+            background-color: rgba(255, 77, 79, 0.15);
+            border: 1px solid rgba(255, 77, 79, 0.3);
+            color: #ff4d4f;
+        }
+        
+        .success {
+            background-color: rgba(82, 196, 26, 0.15);
+            border: 1px solid rgba(82, 196, 26, 0.3);
+            color: #52c41a;
+        }
+        
+        .theme-selector {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--input-background);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-selector h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 15px;
+            justify-items: center;
+        }
+
+        .theme-option {
+            position: relative;
+            width: 250px;
+        }
+
+        .theme-preview {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .theme-option input[type="radio"] {
+            display: none;
+        }
+
+        .theme-option input[type="radio"]:checked + label .theme-preview {
+            box-shadow: 0 0 0 3px var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .theme-option label {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .theme-option label span {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 1.1em;
+        }
+
+        .theme-preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-option label:hover .theme-preview-overlay {
+            opacity: 1;
+        }
+
+        .preview-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .creator-input-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .form-input {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--input-background);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.2);
+        }
+        
+        .form-textarea {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 500px;
+            height: 120px;
+            background-color: var(--input-background);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+        
+        .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.2);
+        }
+        
+        /* Range Slider Styling */
+        input[type=range].form-range {
+            -webkit-appearance: none;
+            margin: 10px 0;
+            width: 100%;
+            background: transparent;
+        }
+        
+        input[type=range].form-range:focus {
+            outline: none;
+        }
+        
+        input[type=range].form-range::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--input-background);
+            border-radius: 3px;
+            border: 1px solid var(--border-color);
+        }
+        
+        input[type=range].form-range::-webkit-slider-thumb {
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -8px;
+            transition: all 0.2s ease;
+        }
+        
+        input[type=range].form-range::-webkit-slider-thumb:hover {
+            background: #7670ff;
+            transform: scale(1.1);
+        }
+        
+        input[type=range].form-range::-moz-range-track {
+            width: 100%;
+            height: 6px;
+            cursor: pointer;
+            background: var(--input-background);
+            border-radius: 3px;
+            border: 1px solid var(--border-color);
+        }
+        
+        input[type=range].form-range::-moz-range-thumb {
+            box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        input[type=range].form-range::-moz-range-thumb:hover {
+            background: #7670ff;
+            transform: scale(1.1);
+        }
+        
+        .submit-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #7670ff;
+            box-shadow: 0 4px 15px rgba(99, 91, 255, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        /* Input Animations */
+        @keyframes slideInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes focusGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 91, 255, 0.1);
+            }
+            70% {
+                box-shadow: 0 0 0 5px rgba(99, 91, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 91, 255, 0);
+            }
+        }
+        
+        .form-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+            margin-bottom: 30px;
+            pointer-events: none; /* Prevent interaction until visible */
+        }
+        
+        .form-section.appear {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto; /* Allow interaction once visible */
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-range:focus {
+            animation: focusGlow 2s infinite;
+        }
+        
+        /* Staggered animation delays */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+        .delay-6 { transition-delay: 0.6s; }
+        .delay-7 { transition-delay: 0.7s; }
+        
+        footer {
+            background-color: var(--card-background);
+            color: var(--text-tertiary);
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        @media (max-width: 768px) {
+            .theme-options {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .theme-option {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Teach-Assist AI</div>
+            <div class="nav-links">
+                <a href="/">Home</a>
+                <a href="/#features">Features</a>
+                <a href="/topic-generator">Topic Generator</a>
+                <a href="/#about">About</a>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="theme-slider">
+                        <span class="sun-icon">☀️</span>
+                        <span class="moon-icon">🌙</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Create Presentations from Topics</h1>
+        <p>Let our AI generate complete, professional presentations from just a topic. No PDF needed.</p>
+        <a href="#generator" class="cta-button">Start Creating</a>
+    </section>
+
+    <div class="container">
+        <section id="generator" class="topic-generator">
+            <h2>Generate Presentation from Topic</h2>
+            <p style="margin-bottom: 25px; color: var(--text-secondary);">Just provide a topic, and our AI will create a complete presentation for you.</p>
+            
+            {% if message %}
+            <div class="message {% if 'Error' in message %}error{% else %}success{% endif %}">
+                {{ message }}
+            </div>
+            {% endif %}
+            
+            <form method="post" action="/generate-from-topic" id="topic-form">
+                <div style="margin-bottom: 30px;" class="form-section delay-1">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Topic</h3>
+                    <input type="text" 
+                           id="topic-input" 
+                           name="topic" 
+                           placeholder="Enter presentation topic (e.g., Quantum Computing)"
+                           class="form-input">
+                </div>
+                
+                <div style="margin-bottom: 30px;" class="form-section delay-2">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Additional Details (Optional)</h3>
+                    <textarea
+                        id="details-input"
+                        name="details"
+                        placeholder="Add any specific details, requirements, or focus areas for your presentation"
+                        class="form-textarea"
+                        rows="3"
+                    ></textarea>
+                </div>
+                
+                <!-- Presentation Rules -->
+                <div style="margin-bottom: 30px;" class="form-section delay-3">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Presentation Rules (Optional)</h3>
+                    <textarea
+                        id="presentation-rules-input"
+                        name="presentation_rules"
+                        placeholder="Enter specific rules for the presentation format (e.g., 'Use Q&A format', 'Each slide must have 3-5 points', etc.)"
+                        class="form-textarea"
+                        rows="3"
+                    ></textarea>
+                     
+                </div>
+                
+                <!-- Slide Count Selector -->
+                <div style="margin-bottom: 30px;" class="form-section delay-4">
+                    <h3 style="color: var(--primary-color); margin-bottom: 15px;">Number of Content Slides</h3>
+                    <div style="display: flex; align-items: center; max-width: 500px;">
+                        <input type="range" 
+                               id="slide-count" 
+                               name="slide_count" 
+                               min="4" 
+                               max="12" 
+                               value="8" 
+                               class="form-range" 
+                               style="flex-grow: 1; height: 6px; border-radius: 5px; background: var(--input-background); outline: none; opacity: 0.7; transition: opacity .2s; -webkit-appearance: none;">
+                        <span id="slide-count-value" style="margin-left: 15px; font-size: 18px; color: var(--text-primary); min-width: 30px; text-align: center;">8</span>
+                    </div>
+                    <p style="margin-top: 8px; color: var(--text-secondary); font-size: 0.9em;">Select how many content slides you want in your presentation (not including title and conclusion slides).</p>
+                </div>
+                
+                <!-- Theme Selector -->
+                <div class="theme-selector form-section delay-5">
+                    <h3>Select Presentation Theme</h3>
+                    <div class="theme-options">
+                        {% for theme in themes %}
+                        <div class="theme-option">
+                            <input type="radio" id="topic-theme-{{ theme.key }}" name="theme" value="{{ theme.key }}" 
+                                   {% if theme.key == 'theme1' %}checked{% endif %}>
+                            <label for="topic-theme-{{ theme.key }}">
+                                <div class="theme-preview">
+                                    <img src="{{ theme.preview }}" alt="{{ theme.name }}" loading="lazy">
+                                    <div class="theme-preview-overlay">
+                                        <span class="preview-button">Select Theme</span>
+                                    </div>
+                                </div>
+                                <span>{{ theme.name }}</span>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Creator Name Input -->
+                <div class="creator-input-container form-section delay-6" style="margin: 20px 0;">
+                    <h3>Creator Name</h3>
+                    <input type="text" 
+                           id="topic-creator-name" 
+                           name="creator_name" 
+                           placeholder="Enter your name"
+                           class="form-input">
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;" class="form-section delay-7">
+                    <button type="submit" class="submit-btn" id="topic-submit-btn">Generate Presentation</button>
+                </div>
+            </form>
+            <div class="loading" id="topic-loading">Generating... Please wait</div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Teach-Assist AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // Check for saved theme preference or use default dark theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                themeToggle.checked = true;
+            }
+            
+            // Handle theme toggle
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Switch to light mode
+                    document.body.classList.add('light-mode');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    // Switch to dark mode
+                    document.body.classList.remove('light-mode');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+            
+            // Handle topic generator form
+            const topicForm = document.getElementById('topic-form');
+            const topicInput = document.getElementById('topic-input');
+            const topicSubmitBtn = document.getElementById('topic-submit-btn');
+            const topicLoading = document.getElementById('topic-loading');
+            
+            // Handle slide count slider
+            const slideCountInput = document.getElementById('slide-count');
+            const slideCountValue = document.getElementById('slide-count-value');
+            
+            // Update slide count display when slider value changes
+            slideCountInput.addEventListener('input', function() {
+                slideCountValue.textContent = this.value;
+            });
+            
+            topicForm.addEventListener('submit', function(e) {
+                // Validate form
+                if (!topicInput.value.trim()) {
+                    e.preventDefault();
+                    alert('Please enter a topic for your presentation');
+                    return;
+                }
+                
+                // Get selected theme
+                const selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+                console.log('Generating presentation for topic:', topicInput.value, 'with theme:', selectedTheme);
+                
+                // Show loading state
+                topicSubmitBtn.disabled = true;
+                topicLoading.style.display = 'block';
+            });
+            
+            // Handle theme selection
+            const themeOptions = document.querySelectorAll('.theme-option input[type="radio"]');
+            
+            themeOptions.forEach(option => {
+                option.addEventListener('change', function() {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.theme-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to chosen option
+                    if (this.checked) {
+                        this.closest('.theme-option').classList.add('selected');
+                        console.log('Selected theme:', this.value);
+                    }
+                });
+            });
+            
+            // Animation functionality
+            const formSections = document.querySelectorAll('.form-section');
+            
+            // Sequentially show form sections one after another
+            formSections.forEach((section, index) => {
+                // Add appear class with staggered timing
+                setTimeout(() => {
+                    section.classList.add('appear');
+                }, 300 + (index * 200)); // Base delay + staggered delay
+            });
+        });
+    </script>
+</body>
+</html> 
